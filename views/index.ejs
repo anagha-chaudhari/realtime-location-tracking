@@ -1,20 +1,26 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real time device tracking application</title>
+    <title>Real-time device tracking application</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-
-
 </head>
 <body>
+    <div id="map" style="height: 100vh;"></div>
 
-    <div id = "map" class="map"></div>
-    
+    <div id="chat">
+        <select id="recipient">
+            <option value="">Select recipient</option>
+        </select>
+        <input type="text" id="message" placeholder="Enter your message">
+        <button id="send-message">Send Message</button>
+        <ul id="messages"></ul>
+    </div>
+
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
     <script src="/js/script.js"></script>
-    
 </body>
 </html>
