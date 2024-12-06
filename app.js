@@ -10,36 +10,31 @@ app.set("view engine", "ejs");
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, "public")));
 
-let users = {}; // To track users
+let users = {};
 
-io.on("connection", function(socket) {
-    console.log("New user connected: " + socket.id);
-    
-    // Store user in the list
-    users[socket.id] = socket.id;
+io.on("connection", function (socket) {
+    console.log(`User connected: ${socket.id}`);
+    users[socket.id] = `User ${socket.id.substring(0, 5)}`;
+    io.emit("update-users", users);
 
-    // Listen for location updates
-    socket.on("send-location", function(data) {
-        io.emit("receive-location", { id: socket.id, ...data });
+    socket.on("send-location", function (data) {
+        io.emit("receive-location", { id: socket.id, latitude: data.latitude, longitude: data.longitude });
     });
 
-    // Listen for messages
     socket.on('send-message', (data) => {
         const { recipientId, message } = data;
-        if (users[recipientId]) {
-            io.to(recipientId).emit('receive-message', { id: socket.id, message });
-        }
+        io.to(recipientId).emit('receive-message', { id: users[socket.id], message });
+        io.to(socket.id).emit('receive-message', { id: "You", message }); // Reflect sent message in sender's chat.
     });
 
-    // Handle disconnection
-    socket.on("disconnect", function() {
-        console.log("User disconnected: " + socket.id);
-        delete users[socket.id];  // Remove user from list
-        io.emit("user-disconnected", socket.id);
+    socket.on("disconnect", function () {
+        console.log(`User disconnected: ${socket.id}`);
+        delete users[socket.id];
+        io.emit("update-users", users);
     });
 });
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
     res.render("index");
 });
 

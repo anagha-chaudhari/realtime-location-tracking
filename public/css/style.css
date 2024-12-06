@@ -37,7 +37,7 @@ body {
 #send-message {
     width: 100%;
     padding: 10px;
-    background-color: #4CAF50;
+    background-color: #2bac9a;
     color: white;
     border: none;
     border-radius: 5px;
@@ -46,7 +46,7 @@ body {
 }
 
 #send-message:hover {
-    background-color: #45a049;
+    background-color: #15b8a3;
 }
 
 #messages {
@@ -64,7 +64,8 @@ body {
     margin: 5px 0;
     border-radius: 5px;
     font-size: 14px;
-    border-left: 5px solid #4CAF50;
+    border: 1px solid #08a48f;
+    border-left: 5px solid #08a48f;
 }
 
 @media (max-width: 600px) {
