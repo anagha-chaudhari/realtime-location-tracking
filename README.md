@@ -1,1 +1,1 @@
-# realtime-device-tracking
+# Real-time Location Tracking & Messaging Application
